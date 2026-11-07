@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: smartresolve-postgres
+    environment:
+      POSTGRES_DB: smartresolve
+      POSTGRES_USER: smartresolve
+      POSTGRES_PASSWORD: smartresolve
+    ports:
+      - "5432:5432"
+    volumes:
+      - smartresolve-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smartresolve -d smartresolve"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  smartresolve-postgres-data:
